@@ -9,8 +9,10 @@ public class MainScript : MonoBehaviour
 {
     const int size = 4;
     Game game;
+    Sound sound;
+
     public Text TextMoves;
-    public Text TimeText;
+    public Text TextTimer;
 
     public int iCountDownSec = 60;
     public int iCountDownMin = 9;// Seconds
@@ -20,11 +22,13 @@ public class MainScript : MonoBehaviour
     void Start()
     {
         game = new Game(size);
+        sound = GetComponent<Sound>();
         HideButtons();
     }
     public void OnStart()
     {
-        TimeText.text = iCountDownMin.ToString();
+        sound.PlayStart();
+        //TextTimer.text = iCountDownMin.ToString();
         game.Start(20);
         ShowButtons();
         iCountDownMin = 9;
@@ -35,15 +39,21 @@ public class MainScript : MonoBehaviour
     public void OnClick()
     {
         if (game.Solved()) return; //если игра решена кнопки не нажимаются 
+
         string name = EventSystem.current.currentSelectedGameObject.name;
         int x = int.Parse(name.Substring(0, 1));
         int y = int.Parse(name.Substring(1, 1));
-        game.PressAt(x, y);
+
+        if (game.PressAt(x, y) > 0)
+        {
+            sound.PlayMove();
+        }
         ShowButtons();
 
         if (game.Solved())
         {
             TextMoves.text = "Game finished in " + game.moves + " moves";
+            //sound.PlaySolved();
         }
     }
     void ShowDigitAt(int digit, int x, int y)
