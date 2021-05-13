@@ -7,14 +7,14 @@ public class Sound : MonoBehaviour
     AudioSource sound;
     AudioClip audioMove;
     AudioClip audioStart;
-   // AudioClip audioSolved;
+    AudioClip audioSolved;
     // Start is called before the first frame update
     void Start()
     {
         sound = GetComponent<AudioSource>();
         audioMove = Resources.Load<AudioClip>("move");
         audioStart = Resources.Load<AudioClip>("start");
-        // audioSolved = Resources.Load<AudioClip>("solved");
+        audioSolved = Resources.Load<AudioClip>("solved");
     }
     public void PlayMove()
     {
@@ -24,10 +24,10 @@ public class Sound : MonoBehaviour
     {
         sound.PlayOneShot(audioStart);
     }
-    /*public void PlaySolved()
+    public void PlaySolved()
     {
         sound.PlayOneShot(audioSolved);
-    }*/
+    }
 
     // Update is called once per frame
     void Update()
